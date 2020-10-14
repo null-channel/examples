@@ -1,0 +1,18 @@
+#!/bin/bash
+# combustion: network
+# Redirect output to the console
+exec > >(exec tee -a /dev/tty0) 2>&1
+# Set a password for root, generate the hash with "openssl passwd -6"
+echo 'root:$6$/mg1TZg7ou2sfIG1$VT/TgBg3YALfGK9coGPrdgmEr23Ba1yXlhW1JLCBBK5uQ9wdjmJajFlRAGfcIgmaFiuJXDHPTjAFL1qXyKJVg/' | chpasswd -e
+# Add a public ssh key and enable sshd
+mkdir -pm700 /root/.ssh/
+#cat id_rsa_new.pub >> /root/.ssh/authorized_keys
+#useradd marek
+#echo 'marek:$6$/mg1TZg7ou2sfIG1$VT/TgBg3YALfGK9coGPrdgmEr23Ba1yXlhW1JLCBBK5uQ9wdjmJajFlRAGfcIgmaFiuJXDHPTjAFL1qXyKJVg/' | chpasswd -e
+#mkdir -pm700 /home/marek/.ssh/
+#cat id_rsa_new.pub >> /home/marek/.ssh/authorized_keys
+systemctl enable sshd.service
+# Install vim-small
+zypper --non-interactive install vim-small
+# Leave a marker
+echo "Configured with combustion" > /etc/issue.d/combustion
